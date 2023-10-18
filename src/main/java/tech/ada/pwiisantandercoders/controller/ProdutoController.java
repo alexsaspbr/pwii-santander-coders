@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.*;
 import tech.ada.pwiisantandercoders.model.Produto;
 import tech.ada.pwiisantandercoders.service.ProdutoService;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/produto")
 public class ProdutoController {
@@ -23,6 +26,15 @@ public class ProdutoController {
         return this.produtoService.criar(produto);
     }
 
-    //Listar todos
 
+    //Listar todos
+    @RequestMapping(value = "/todos", method = RequestMethod.GET)
+    public List<Produto> todos() {
+        return this.produtoService.todos();
+    }
+
+    @RequestMapping(value = "/buscarPorId", method = RequestMethod.GET)
+    public Optional<Produto> buscarPorId(Long id) {
+        return this.produtoService.buscarPorId(id);
+    }
 }
