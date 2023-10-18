@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import tech.ada.pwiisantandercoders.model.Produto;
 import tech.ada.pwiisantandercoders.service.ProdutoService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/produto")
 public class ProdutoController {
@@ -24,5 +26,22 @@ public class ProdutoController {
     }
 
     //Listar todos
+    @GetMapping("/todos")
+    public List<Produto> todos() {
+        return this.produtoService.todos();
+    }
+
+    @GetMapping("/por/{id}")
+    public Produto buscarPorId(@PathVariable("id") Long id) {
+        return this.produtoService.buscarPorId(id)
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado."));
+    }
+
+    @PutMapping("/atualizar")
+    public Produto atualizar(@RequestBody Produto produto) {
+        return this.produtoService.atualizar(produto);
+    }
+
+    //deletar
 
 }

@@ -33,7 +33,12 @@ public class ProdutoService {
     public Produto atualizar(Produto produto){
         Optional<Produto> optionalProduto = this.buscarPorId(produto.getId());
         if(optionalProduto.isPresent()) {
-            return this.produtoRepository.save(optionalProduto.get());
+
+            Produto produtoDB = optionalProduto.get();
+
+            Produto produtoAtualizado = new Produto(produtoDB.getId(), produto.getNome(), produto.getDescricao(), produto.getPreco());
+
+            return this.produtoRepository.save(produtoAtualizado);
         }
         throw new RuntimeException("Produto inexistente");
     }
