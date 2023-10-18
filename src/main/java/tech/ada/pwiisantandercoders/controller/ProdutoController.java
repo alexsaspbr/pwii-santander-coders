@@ -43,5 +43,8 @@ public class ProdutoController {
     }
 
     //deletar
-
+    @DeleteMapping("/deletar/{id}")
+    public void deletar(@PathVariable("id") Long id) {
+        this.produtoService.deletar(id);
+    }
 }
