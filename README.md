@@ -9,4 +9,5 @@ Victor Hugo Evangelista Scarsi
 Gustavo Souza
 Victor Hugo Evangelista Scarsi
 Lucas Antonio Baron Ziembowicz
+Bruno Silva de Morais
 Alex da Silva Araujo
