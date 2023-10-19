@@ -9,15 +9,27 @@ import tech.ada.pwiisantandercoders.model.Produto;
 public class ProdutoConverter {
 
     public ProdutoDTO toProdutoDTO(Produto produto) {
-        ProdutoDTO produtoDTO = new ProdutoDTO();
-        BeanUtils.copyProperties(produto, produtoDTO, "id");
-        return produtoDTO;
+        //ProdutoDTO produtoDTO = new ProdutoDTO();
+        //BeanUtils.copyProperties(produto, produtoDTO, "id");
+        //return produtoDTO;
+        return ProdutoDTO.builder()
+                  .codigoBarra(produto.getCodigoBarra())
+                  .nome(produto.getNome())
+                  .descricao(produto.getDescricao())
+                  .preco(produto.getPreco())
+                .build();
     }
 
     public Produto toProduto(ProdutoDTO produtoDTO){
-        Produto produto = new Produto();
-        BeanUtils.copyProperties(produtoDTO, produto);
-        return produto;
+        //Produto produto = new Produto();
+        //BeanUtils.copyProperties(produtoDTO, produto);
+        //return produto;
+        return Produto.builder()
+                .codigoBarra(produtoDTO.getCodigoBarra())
+                .nome(produtoDTO.getNome())
+                .descricao(produtoDTO.getDescricao())
+                .preco(produtoDTO.getPreco())
+                .build();
     }
 
 }

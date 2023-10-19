@@ -31,19 +31,21 @@ public class ProdutoController {
         return this.produtoService.todos();
     }
 
-/*    @GetMapping("/por/{codigoBarra}")
+    @GetMapping("/por/{codigoBarra}")
     public ProdutoDTO buscarPorId(@PathVariable("codigoBarra") String codigoBarra) {
-        return this.produtoService.buscarPorId(codigoBarra)
+        return this.produtoService.buscaPorCodigoBarra(codigoBarra)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado."));
+    }
+
+/*    @PutMapping("/atualizar")
+    public ProdutoDTO atualizar(@RequestBody ProdutoDTO produtoDTO) {
+        return this.produtoService.atualizar(produtoDTO);
     }*/
 
-/*
-    @PutMapping("/atualizar")
-    public ProdutoDTO atualizar(@RequestBody ProdutoDTO produtoDTO) {
-        return this.produtoService.atualizar(produto);
-    }
-*/
-
     //deletar
+    @DeleteMapping("/deletar/{codigoBarra}")
+    public void deletar(@PathVariable("codigoBarra") String codigoBarra) {
+        this.produtoService.deletar(codigoBarra);
+    }
 
 }

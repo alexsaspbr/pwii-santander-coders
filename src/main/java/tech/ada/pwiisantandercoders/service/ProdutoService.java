@@ -1,6 +1,5 @@
 package tech.ada.pwiisantandercoders.service;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.ada.pwiisantandercoders.converter.ProdutoConverter;
@@ -8,6 +7,7 @@ import tech.ada.pwiisantandercoders.dto.ProdutoDTO;
 import tech.ada.pwiisantandercoders.model.Produto;
 import tech.ada.pwiisantandercoders.repository.ProdutoRepository;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,11 +36,16 @@ public class ProdutoService {
     }
 
     //BUSCAR - READ - BUSCAR POR ID
-/*    public Optional<Produto> buscarPorId(Long id){
-        return this.produtoRepository.findById(id);
-    }*/
+    public Optional<ProdutoDTO> buscaPorCodigoBarra(String codigoBarra){
+        Optional<Produto> optionalProduto = this.produtoRepository.findByCodigoBarra(codigoBarra);
+        if(optionalProduto.isPresent()){
+            return Optional.of(this.produtoConverter.toProdutoDTO(optionalProduto.get()));
+        } else {
+            return Optional.empty();
+        }
+    }
 
-/*    //ATUALIZAR - UPDATE
+  /*  //ATUALIZAR - UPDATE
     public Produto atualizar(Produto produto){
         Optional<Produto> optionalProduto = this.buscarPorId(produto.getId());
         if(optionalProduto.isPresent()) {
@@ -55,8 +60,8 @@ public class ProdutoService {
     }*/
 
     //DELETE
-/*    public void deletar(Long id){
-        this.produtoRepository.deleteById(id);
-    }*/
+    public void deletar(String codigoBarra) {
+        this.produtoRepository.deleteByCodigoBarra(codigoBarra);
+    }
 
 }
