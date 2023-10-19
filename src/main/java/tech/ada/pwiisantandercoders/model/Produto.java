@@ -22,6 +22,9 @@ public class Produto {
     @Column(nullable = false)
     private String nome;
 
+    @Column(nullable = false, unique = true)
+    private String codigoBarra;
+
     @Column(nullable = true)
     private String descricao;
 
