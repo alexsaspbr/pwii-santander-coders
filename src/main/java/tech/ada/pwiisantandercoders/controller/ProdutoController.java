@@ -37,10 +37,10 @@ public class ProdutoController {
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado."));
     }
 
-/*    @PutMapping("/atualizar")
+    @PutMapping("/atualizar")
     public ProdutoDTO atualizar(@RequestBody ProdutoDTO produtoDTO) {
         return this.produtoService.atualizar(produtoDTO);
-    }*/
+    }
 
     //deletar
     @DeleteMapping("/deletar/{codigoBarra}")

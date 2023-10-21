@@ -12,5 +12,4 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     //SELECT * FROM TB_PRODUTO WHERE CODIGO_BARRA =: CODIGO_BARRA
     Optional<Produto> findByCodigoBarra(String codigoBarra);
 
-    void deleteByCodigoBarra(String codigoBarra);
 }

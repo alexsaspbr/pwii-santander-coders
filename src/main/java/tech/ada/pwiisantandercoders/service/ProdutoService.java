@@ -36,32 +36,40 @@ public class ProdutoService {
     }
 
     //BUSCAR - READ - BUSCAR POR ID
-    public Optional<ProdutoDTO> buscaPorCodigoBarra(String codigoBarra){
+    public Optional<ProdutoDTO> buscaPorCodigoBarra(String codigoBarra) {
         Optional<Produto> optionalProduto = this.produtoRepository.findByCodigoBarra(codigoBarra);
-        if(optionalProduto.isPresent()){
+        if (optionalProduto.isPresent()) {
             return Optional.of(this.produtoConverter.toProdutoDTO(optionalProduto.get()));
         } else {
             return Optional.empty();
         }
     }
 
-  /*  //ATUALIZAR - UPDATE
-    public Produto atualizar(Produto produto){
-        Optional<Produto> optionalProduto = this.buscarPorId(produto.getId());
-        if(optionalProduto.isPresent()) {
+    //ATUALIZAR - UPDATE
+    public ProdutoDTO atualizar(ProdutoDTO produtoDTO) {
+        Optional<Produto> optionalProduto = this.produtoRepository.findByCodigoBarra(produtoDTO.getCodigoBarra());
+        if (optionalProduto.isPresent()) {
 
             Produto produtoDB = optionalProduto.get();
 
-            Produto produtoAtualizado = new Produto(produtoDB.getId(), produto.getNome(), produto.getDescricao(), produto.getPreco());
+            Produto produtoAtualizado = Produto.builder()
+                                            .id(produtoDB.getId())
+                                            .nome(produtoDTO.getNome())
+                                            .codigoBarra(produtoDTO.getCodigoBarra())
+                                            .descricao(produtoDTO.getDescricao())
+                                            .preco(produtoDTO.getPreco())
+                                            .build();
 
-            return this.produtoRepository.save(produtoAtualizado);
+            Produto produtoAtualizadoDB = this.produtoRepository.save(produtoAtualizado);
+            return this.produtoConverter.toProdutoDTO(produtoAtualizadoDB);
         }
         throw new RuntimeException("Produto inexistente");
-    }*/
+    }
 
     //DELETE
     public void deletar(String codigoBarra) {
-        this.produtoRepository.deleteByCodigoBarra(codigoBarra);
+        Optional<Produto> optionalProduto = this.produtoRepository.findByCodigoBarra(codigoBarra);
+        optionalProduto.ifPresent(produto -> this.produtoRepository.delete(produto));
     }
 
 }
