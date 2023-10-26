@@ -29,7 +29,8 @@ public class SecurityFilter extends OncePerRequestFilter {
         var authorization = request.getHeader("Authorization");
 
         if(authorization != null) {
-            String token = authorization.replace("Bearer", "");
+
+            String token = authorization.replace("Bearer ", "");
 
             String login = this.tokenService.validarToken(token);
             UserDetails user = this.usuarioReposity.findByLogin(login);

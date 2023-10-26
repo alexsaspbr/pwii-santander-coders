@@ -2,10 +2,10 @@ package tech.ada.pwiisantandercoders.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
-import tech.ada.pwiisantandercoders.exception.TokenInvalidoException;
 import tech.ada.pwiisantandercoders.model.Usuario;
 
 import java.time.Instant;
@@ -21,15 +21,19 @@ public class TokenService {
 
     public String gerarToken(Usuario usuario) {
 
-        Algorithm algorithm = Algorithm.HMAC256(secret);
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
 
-        String token = JWT.create()
-                .withIssuer(ISSUER)
-                .withSubject(usuario.getLogin())
-                .withExpiresAt(getExpiresAt())
-                .sign(algorithm);
+            return JWT.create()
+                    .withIssuer(ISSUER)
+                    .withSubject(usuario.getLogin())
+                    .withExpiresAt(getExpiresAt())
+                    .sign(algorithm);
 
-        return token;
+        } catch (JWTCreationException e) {
+            return "";
+        }
+
     }
 
     public String validarToken(String token) {
@@ -42,8 +46,8 @@ public class TokenService {
                     .build()
                     .verify(token)
                     .getSubject();
-        } catch (Exception e) {
-            throw new TokenInvalidoException();
+        } catch (JWTVerificationException e) {
+            return "";
         }
 
     }
