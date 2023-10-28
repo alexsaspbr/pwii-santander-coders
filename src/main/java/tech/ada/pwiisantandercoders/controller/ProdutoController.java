@@ -1,7 +1,10 @@
 package tech.ada.pwiisantandercoders.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.ada.pwiisantandercoders.dto.ProdutoDTO;
 import tech.ada.pwiisantandercoders.service.ProdutoService;
@@ -22,8 +25,8 @@ public class ProdutoController {
 
     @RequestMapping(value = "/criar", method = RequestMethod.POST)
     //@PostMapping(value = "/criar")
-    public ProdutoDTO criar(@RequestBody ProdutoDTO produtoDTO) {
-        return this.produtoService.criar(produtoDTO);
+    public ResponseEntity<ProdutoDTO> criar(@RequestBody @Valid ProdutoDTO produtoDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.produtoService.criar(produtoDTO));
     }
 
     //Listar todos
@@ -39,7 +42,7 @@ public class ProdutoController {
     }
 
     @PutMapping("/atualizar")
-    public ProdutoDTO atualizar(@RequestBody ProdutoDTO produtoDTO) {
+    public ProdutoDTO atualizar(@RequestBody @Valid ProdutoDTO produtoDTO) {
         return this.produtoService.atualizar(produtoDTO);
     }
 

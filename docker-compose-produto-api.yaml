@@ -1,0 +1,32 @@
+version: '3'
+services:
+
+  db:
+    image: postgres:14.1-alpine
+    container_name: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+
+  app:
+    image: alex-araujo/produto-api:latest
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - JPA_URL=jdbc:postgresql://db:5432/postgres
+      - JPA_USERNAME=postgres
+      - JPA_PASSWORD=postgres
+    ports:
+      - '8082:8080'    
+
+volumes:
+  db:
+    driver: local

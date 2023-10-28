@@ -26,6 +26,7 @@ public class Usuario implements UserDetails {
     @Column(nullable = false, unique = true)
     private String login;
     private String password;
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     public Usuario(String login, String password, Role role) {
